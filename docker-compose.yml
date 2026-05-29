@@ -1,14 +1,18 @@
 services:
   database:
-    image: mysql:lts
+    image: mysql:8
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD:
-      MYSQL_DATABASE: moonlight
-      MYSQL_USER: root
-      MYSQL_PASSWORD: moonshinelightsky
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - internal
 
   backend:
     build:
