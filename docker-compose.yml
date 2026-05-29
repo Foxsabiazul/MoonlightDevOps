@@ -20,6 +20,20 @@ services:
     depends_on:
       - database
 
+  frontend:
+    build:
+      context: ./Moonlight_Frontend_React
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+        VITE_USE_MOCK: ${VITE_USE_MOCK}
+        VITE_MP_PUBLIC_KEY: ${VITE_MP_PUBLIC_KEY}
+    restart: unless-stopped
+    depends_on:
+      - backend
+    networks:
+      - internal
+
   nginx:
     image: nginx:1.31.1-alpine3.23
     restart: unless-stopped
